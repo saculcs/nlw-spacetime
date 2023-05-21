@@ -4,14 +4,52 @@
   box-sizing: border-box;
 }
 
+:root {
+  font-size: 16px;
+}
+
+/*Estilização da scrollbar (barra de rolagem) do site*/
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #2c2c31;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #9e9ea0;
+}
+/*Criando o efeito de abertura do site*/
+@keyframes entering {
+  from {
+    opacity: 0;
+    transform: translateY(-200px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 body {
   background-color: #121215;
   color: #eaeaea;
   font-family: "Roboto", sans-serif;
+  /*Dividindo a página em grid.*/
+  display: grid;
+  grid-template-areas: "profile timeline";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 100vh;
 }
 
 nav {
   padding: 64px;
+  grid-area: timeline;
+  /*Comando que faz só o lado direito da página rolar.*/
+  overflow-y: scroll;
+  /*Aplicando o efeito de abertura do site*/
+  animation: entering 0.7s ease-in-out;
 }
 
 .memory {
@@ -24,12 +62,12 @@ nav {
 
 .memory small {
   color: #bebebf;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .memory h1 {
   color: #bebebf;
-  font-size: 32px;
+  font-size: 2rem;
 }
 
 .memory img {
@@ -37,10 +75,88 @@ nav {
   height: 280px;
   object-fit: cover;
   border-radius: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.memory:hover img {
+  transform: scale(1.1);
+}
+
+.memory div {
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 .memory p {
-  font-size: 18px;
+  font-size: 1.2rem;
   color: #bebebf;
   line-height: 28px;
+}
+
+aside {
+  grid-area: profile;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /*Edição da linha que divide o site*/
+  border-right: 1px solid;
+  border-image: linear-gradient(#727275, #2c2c31) 1;
+  /*Edição do fundo do profile*/
+  gap: 20px;
+  background-image: url("./assets/background.svg");
+  background-position: top right;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+}
+
+aside * {
+  /*Aplicando o efeito de abertura do site*/
+  animation: entering 0.7s ease-in-out;
+}
+
+/*Comando que seleciona o segundo filho de imagem do aside*/
+aside img:nth-child(2) {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 5px solid transparent;
+  background: linear-gradient(#d39e33, #ed5636, #633bbc) padding-box,
+    linear-gradient(260deg, #d39e33, #ed5636, #633bbc) border-box;
+}
+
+aside p {
+  font-size: 2rem;
+  text-align: center;
+}
+
+aside span {
+  font-size: 0.75rem;
+  color: #9e9ea0;
+}
+
+@media (max-width: 768px) {
+  :root {
+    font-size: 14px;
+  }
+
+  body {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.2fr 0.8fr;
+    grid-template-areas:
+      "profile"
+      "timeline";
+  }
+
+  aside {
+    border-right: none;
+    padding: 32px 12px;
+  }
+
+  nav {
+    overflow-y: visible;
+    padding: 22px;
+  }
 }
